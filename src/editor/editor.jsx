@@ -37,6 +37,16 @@ class EditorComponent extends Component {
     const { classes } = this.props;
     return (
       <div className={classes.editorContainer}>
+        <BorderColorIcon className={classes.editIcon}></BorderColorIcon>
+        <input
+          type="text"
+          className={classes.titleInput}
+          placeholder="Note Title ... "
+          value={this.state.title ? this.state.title : ""}
+          onChange={(e) => {
+            this.updateTitle(e.target.value);
+          }}
+        />
         <ReactQuill value={this.state.text} onChange={this.updateBody} />
       </div>
     );
@@ -53,5 +63,9 @@ class EditorComponent extends Component {
       body: this.state.text,
     });
   }, 1500);
+  updateTitle = async (txt) => {
+    await this.setState({ title: txt });
+    this.update();
+  };
 }
 export default withStyles(styles)(EditorComponent);
