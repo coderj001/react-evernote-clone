@@ -33,9 +33,26 @@ export default class App extends Component {
         <SidebarComponent
           selectedNoteIndex={this.state.selectedNoteIndex}
           notes={this.state.notes}
-        ></SidebarComponent>
-        <EditorComponent></EditorComponent>
+          deleteNote={this.deleteNote}
+          selectNote={this.selectNote}
+          newNote={this.newNote}
+        />
+        {this.state.selectedNote && (
+          <EditorComponent
+            selectNote={this.state.selectedNote}
+            selectedNoteIndex={this.state.selectedNoteIndex}
+            notes={this.state.notes}
+            noteUpdate={this.noteUpdate}
+          />
+        )}
       </div>
     );
   }
+
+  selectNote = (note, index) =>
+    this.setState({ selectedNoteIndex: index, selectedNote: note });
+  noteUpdate = (id, note) => {
+    console.log("id", id);
+    console.log("note", note);
+  };
 }

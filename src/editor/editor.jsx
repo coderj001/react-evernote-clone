@@ -15,6 +15,24 @@ class EditorComponent extends Component {
     };
   }
 
+  componentDidMount = () => {
+    this.setState({
+      text: this.props.selectNote.body,
+      title: this.props.selectNote.title,
+      id: this.props.selectNote.id,
+    });
+  };
+
+  componentDidUpdate = () => {
+    if (this.props.selectNote.id !== this.state.id) {
+      this.setState({
+        text: this.props.selectNote.body,
+        title: this.props.selectNote.title,
+        id: this.props.selectNote.id,
+      });
+    }
+  };
+
   render() {
     const { classes } = this.props;
     return (
@@ -30,8 +48,10 @@ class EditorComponent extends Component {
   };
 
   update = debounce(() => {
-    // Come back late
-    console.log("Updating Database");
+    this.props.noteUpdate(this.state.id, {
+      title: this.state.title,
+      body: this.state.text,
+    });
   }, 1500);
 }
 export default withStyles(styles)(EditorComponent);
